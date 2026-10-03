@@ -1,0 +1,516 @@
+# ============================================
+#   ❀ BlossomEconomy 2.6 - Blossom SMP ❀
+# ============================================
+# Colours: &a, &d, &l ... and hex colours like &#FF69B4
+# After editing, run: /eco reload
+
+# Money every new player starts with
+starting-balance: 500
+
+# How often balances and market prices are saved (minutes)
+autosave-minutes: 5
+
+# Smallest amount allowed with /pay
+min-pay: 1
+
+# Can players in creative mode use /sell? (set to false so staff can't print money)
+allow-creative-selling: true
+
+# ----------------------------------------------
+# Automatic prices
+# Items NOT in the 'prices' list get a value from their crafting recipe,
+# e.g. a diamond pickaxe = 3 diamonds + 2 sticks. Items that can't be
+# crafted (spawn eggs, command blocks...) stay unsellable.
+# ----------------------------------------------
+auto-pricing:
+  enabled: true
+  # Crafted items are worth this % of their ingredients (below 100 stops craft-for-profit tricks)
+  craft-value-percent: 90
+
+# Extra money per enchantment level when selling (Sharpness V = 5 levels).
+# Enchanted books can be sold too. Damaged items sell for less.
+enchant-value-per-level: 5
+
+# ----------------------------------------------
+# Show the value of the item you're holding above the hotbar
+# ----------------------------------------------
+price-display:
+  enabled: true
+  format: "&7Worth: &a%each% &8each &8| &a%stack% &7stack &8| %trend%"
+
+# ----------------------------------------------
+# Show the value in the item tooltip (hover over an item): "~$ 1M"
+# Needs ProtocolLib. Only changes what players SEE - real items are not touched.
+# %each% = one item, %stack% = whole stack, %amount% = stack size
+# ----------------------------------------------
+tooltip-prices:
+  enabled: true
+  format: "&7~&a$ &f%each%"
+  stack-format: "&7~&a$ &f%each% &8| &a$ &f%stack% &7total"
+  # Creative mode can turn fake lore into real lore, so it's hidden there
+  hide-in-creative: true
+
+# ----------------------------------------------
+# Live market
+# Selling an item lowers its price, buying it from /shop raises it.
+# Prices slowly return to normal when nobody trades the item.
+# ----------------------------------------------
+market:
+  # Shop buy price = normal price x this (higher = everything in /shop costs more)
+  buy-multiplier: 10.0
+  # How much ONE item sold/bought moves the price (0.001 = 0.1%, so a stack of 64 moves it about 6%)
+  impact-per-item: 0.001
+  # Lowest a price can drop to (% of normal)
+  min-price-percent: 25
+  # Highest a price can rise to (% of normal)
+  max-price-percent: 300
+  # Every recovery-minutes, prices move this % of the way back to normal
+  recovery-percent: 5
+  recovery-minutes: 5
+
+# ----------------------------------------------
+# Fixed shop BUY prices. These ignore buy-multiplier.
+# Selling prices are NOT changed by this list.
+# Add any item here to give it its own /shop price.
+# ----------------------------------------------
+buy-prices:
+  TOTEM_OF_UNDYING: 75000
+  NETHERITE_SCRAP: 25000
+  NETHERITE_INGOT: 120000
+  NETHERITE_BLOCK: 1080000
+  NETHERITE_UPGRADE_SMITHING_TEMPLATE: 75000
+  ANCIENT_DEBRIS: 25000
+  DIAMOND: 2000
+  DIAMOND_BLOCK: 18000
+  GOLDEN_APPLE: 3000
+  ENCHANTED_GOLDEN_APPLE: 150000
+  ENDER_PEARL: 1000
+  EXPERIENCE_BOTTLE: 500
+  SHULKER_SHELL: 15000
+  SHULKER_BOX: 35000
+  TNT: 1000
+  COBWEB: 400
+  BLAZE_ROD: 800
+  EMERALD: 1200
+  EMERALD_BLOCK: 10800
+  ELYTRA: 250000
+  MACE: 200000
+  TRIDENT: 50000
+
+# ----------------------------------------------
+# Discord (/discord)
+# ----------------------------------------------
+discord:
+  link: "https://discord.gg/EbMR5cU9c2"
+  message: "&#FF69B4&l❀ &7Join the &#FF69B4Blossom SMP &7Discord for events, giveaways and support!"
+  button: "&#FF69B4&l[CLICK TO JOIN]"
+  hover: "&7Click to open &f%link%"
+
+# ----------------------------------------------
+# Daily rewards (/daily)
+# Claim once every cooldown-hours. Claim again within streak-reset-hours
+# to keep your streak; miss it and you start again at day 1.
+# ----------------------------------------------
+daily-rewards:
+  enabled: true
+  cooldown-hours: 24
+  streak-reset-hours: 48
+  # Money for day 1, day 2, day 3... After the last day, the last amount repeats.
+  rewards: [100, 150, 200, 300, 400, 500, 1000]
+
+# ----------------------------------------------
+# Auction house (/ah)
+# ----------------------------------------------
+auction:
+  title: "&#FF69B4&l❀ Auction House"
+  # % of the sale price the server keeps
+  tax-percent: 5
+  # How many items one player can list at once
+  max-listings: 5
+  # How long listings last before they return to the seller
+  duration-hours: 48
+  min-price: 1
+  max-price: 1000000000000
+
+# ----------------------------------------------
+# PvP kill rewards
+# ----------------------------------------------
+kill-rewards:
+  enabled: true
+  # Money the killer gets for every player kill
+  amount: 50
+  # Extra % of the victim's balance moved to the killer (0 = off)
+  steal-percent: 0
+  # Seconds before killing the SAME player pays again (stops kill farming)
+  same-victim-cooldown: 300
+
+# ----------------------------------------------
+# Shop (/shop) - which items can be BOUGHT.
+# Buy price comes from 'prices' below x buy-multiplier.
+# Max 45 items per category.
+# ----------------------------------------------
+shop:
+  title: "&#FF69B4&l❀ Blossom Shop"
+  categories:
+    blocks:
+      name: "&#FF69B4&lBlocks"
+      icon: CHERRY_LOG
+      slot: 10
+      items: [GRASS_BLOCK, DIRT, COARSE_DIRT, PODZOL, MUD, STONE, COBBLESTONE, DEEPSLATE,
+              COBBLED_DEEPSLATE, SMOOTH_STONE, STONE_BRICKS, ANDESITE, DIORITE, GRANITE, TUFF,
+              CALCITE, SAND, RED_SAND, GRAVEL, CLAY, GLASS, BRICKS, TERRACOTTA, WHITE_WOOL,
+              QUARTZ_BLOCK, MOSS_BLOCK, SNOW_BLOCK, ICE, PACKED_ICE, BLUE_ICE, SEA_LANTERN,
+              OAK_LOG, SPRUCE_LOG, BIRCH_LOG, JUNGLE_LOG, ACACIA_LOG, DARK_OAK_LOG, MANGROVE_LOG,
+              CHERRY_LOG, CRIMSON_STEM, WARPED_STEM, OAK_PLANKS, SPRUCE_PLANKS, CHERRY_PLANKS,
+              CHERRY_LEAVES]
+    farming:
+      name: "&#FF69B4&lFarming"
+      icon: WHEAT_SEEDS
+      slot: 11
+      items: [WHEAT_SEEDS, WHEAT, HAY_BLOCK, CARROT, POTATO, BEETROOT_SEEDS, MELON_SEEDS, MELON,
+              PUMPKIN_SEEDS, PUMPKIN, SUGAR_CANE, CACTUS, BAMBOO, KELP, COCOA_BEANS, NETHER_WART,
+              SWEET_BERRIES, GLOW_BERRIES, BONE_MEAL, BROWN_MUSHROOM, RED_MUSHROOM, LILY_PAD, VINE,
+              PINK_PETALS, OAK_LEAVES, OAK_SAPLING, SPRUCE_SAPLING, BIRCH_SAPLING, CHERRY_SAPLING,
+              EGG]
+    food:
+      name: "&#FF69B4&lFood"
+      icon: COOKED_BEEF
+      slot: 12
+      items: [APPLE, BREAD, COOKIE, MELON_SLICE, DRIED_KELP, BEETROOT, BAKED_POTATO, MUSHROOM_STEW,
+              BEEF, COOKED_BEEF, PORKCHOP, COOKED_PORKCHOP, CHICKEN, COOKED_CHICKEN, MUTTON,
+              COOKED_MUTTON, SALMON, COOKED_SALMON, COD, COOKED_COD, PUMPKIN_PIE, CAKE,
+              GOLDEN_CARROT, GOLDEN_APPLE]
+    mobdrops:
+      name: "&#FF69B4&lMob Drops"
+      icon: BONE
+      slot: 14
+      items: [ROTTEN_FLESH, BONE, STRING, SPIDER_EYE, GUNPOWDER, SLIME_BALL, LEATHER, FEATHER,
+              RABBIT_HIDE, RABBIT_FOOT, INK_SAC, GLOW_INK_SAC, ENDER_PEARL, BLAZE_ROD, BREEZE_ROD,
+              GHAST_TEAR, PHANTOM_MEMBRANE, MAGMA_CREAM, PRISMARINE_SHARD, PRISMARINE_CRYSTALS,
+              NAUTILUS_SHELL, TURTLE_SCUTE, ARMADILLO_SCUTE, FLINT]
+    combat:
+      name: "&#FF69B4&lCombat"
+      icon: DIAMOND_SWORD
+      slot: 15
+      items: [IRON_SWORD, IRON_AXE, DIAMOND_SWORD, DIAMOND_AXE, BOW, CROSSBOW, ARROW,
+              SPECTRAL_ARROW, SHIELD, IRON_HELMET, IRON_CHESTPLATE, IRON_LEGGINGS, IRON_BOOTS,
+              DIAMOND_HELMET, DIAMOND_CHESTPLATE, DIAMOND_LEGGINGS, DIAMOND_BOOTS, COBWEB, TNT,
+              EXPERIENCE_BOTTLE, TOTEM_OF_UNDYING]
+    netherend:
+      name: "&#FF69B4&lNether & End"
+      icon: ENDER_EYE
+      slot: 16
+      items: [NETHERRACK, NETHER_BRICKS, SOUL_SAND, SOUL_SOIL, MAGMA_BLOCK, BASALT, BLACKSTONE,
+              QUARTZ, GLOWSTONE_DUST, BLAZE_POWDER, ENDER_EYE, END_STONE, END_STONE_BRICKS,
+              CHORUS_FRUIT, POPPED_CHORUS_FRUIT, PURPUR_BLOCK, SHULKER_SHELL]
+    ores:
+      name: "&#FF69B4&lOres & Gems"
+      icon: DIAMOND
+      slot: 20
+      items: [COAL, CHARCOAL, RAW_IRON, IRON_NUGGET, IRON_INGOT, RAW_GOLD, GOLD_NUGGET, GOLD_INGOT,
+              RAW_COPPER, COPPER_INGOT, REDSTONE, LAPIS_LAZULI, AMETHYST_SHARD, DIAMOND, EMERALD,
+              COAL_BLOCK, IRON_BLOCK, GOLD_BLOCK, COPPER_BLOCK, REDSTONE_BLOCK, LAPIS_BLOCK,
+              DIAMOND_BLOCK, EMERALD_BLOCK, NETHERITE_SCRAP, NETHERITE_INGOT, NETHERITE_BLOCK,
+              NETHERITE_UPGRADE_SMITHING_TEMPLATE]
+    tools:
+      name: "&#FF69B4&lTools & Utility"
+      icon: IRON_PICKAXE
+      slot: 21
+      items: [IRON_PICKAXE, IRON_SHOVEL, IRON_HOE, DIAMOND_PICKAXE, DIAMOND_SHOVEL, DIAMOND_HOE,
+              SHEARS, FISHING_ROD, FLINT_AND_STEEL, BUCKET, COMPASS, CLOCK, SPYGLASS, LEAD, TORCH,
+              LANTERN, CHEST, BARREL, ENDER_CHEST, SHULKER_BOX, CRAFTING_TABLE, FURNACE, SMOKER,
+              BLAST_FURNACE, ANVIL, ENCHANTING_TABLE, BOOKSHELF, BOOK, BREWING_STAND, CAULDRON,
+              GLASS_BOTTLE, WHITE_BED, ITEM_FRAME]
+    redstone:
+      name: "&#FF69B4&lRedstone"
+      icon: REDSTONE
+      slot: 23
+      items: [REDSTONE, REDSTONE_TORCH, REPEATER, COMPARATOR, LEVER, STONE_BUTTON,
+              STONE_PRESSURE_PLATE, TRIPWIRE_HOOK, PISTON, STICKY_PISTON, OBSERVER, HOPPER, DROPPER,
+              DISPENSER, REDSTONE_LAMP, DAYLIGHT_DETECTOR, TARGET, NOTE_BLOCK, SLIME_BLOCK, IRON_DOOR,
+              OAK_DOOR, OAK_TRAPDOOR, RAIL, POWERED_RAIL, DETECTOR_RAIL, ACTIVATOR_RAIL, MINECART,
+              CHEST_MINECART, HOPPER_MINECART]
+    decoration:
+      name: "&#FF69B4&lDecoration"
+      icon: PINK_DYE
+      slot: 24
+      items: [WHITE_DYE, LIGHT_GRAY_DYE, GRAY_DYE, BLACK_DYE, BROWN_DYE, RED_DYE, ORANGE_DYE,
+              YELLOW_DYE, LIME_DYE, GREEN_DYE, CYAN_DYE, LIGHT_BLUE_DYE, BLUE_DYE, PURPLE_DYE,
+              MAGENTA_DYE, PINK_DYE, PINK_WOOL, PINK_TERRACOTTA, PINK_STAINED_GLASS,
+              PINK_CONCRETE_POWDER, POPPY, DANDELION, CORNFLOWER, LILY_OF_THE_VALLEY, FLOWER_POT,
+              SOUL_LANTERN, PAINTING]
+
+# ----------------------------------------------
+# Normal SELL price for 1 item (the market moves it up and down).
+# Anything listed here can be sold with /sell. Items not listed can't be sold
+# (use /ah for those). Crafted items are priced at or below their ingredients
+# so nobody can craft for free money.
+# ----------------------------------------------
+prices:
+  # --- Blocks ---
+  GRASS_BLOCK: 0.5
+  DIRT: 0.1
+  COARSE_DIRT: 0.15
+  PODZOL: 0.5
+  MUD: 0.2
+  STONE: 0.2
+  COBBLESTONE: 0.1
+  DEEPSLATE: 0.2
+  COBBLED_DEEPSLATE: 0.1
+  SMOOTH_STONE: 0.3
+  STONE_BRICKS: 0.2
+  ANDESITE: 0.1
+  DIORITE: 0.1
+  GRANITE: 0.1
+  TUFF: 0.1
+  CALCITE: 0.3
+  SAND: 0.2
+  RED_SAND: 0.3
+  GRAVEL: 0.2
+  FLINT: 0.2
+  CLAY_BALL: 0.2
+  CLAY: 0.8
+  GLASS: 0.3
+  BRICK: 0.2
+  BRICKS: 0.8
+  TERRACOTTA: 0.5
+  WHITE_WOOL: 1
+  SNOW_BLOCK: 0.3
+  ICE: 0.5
+  PACKED_ICE: 4.5
+  BLUE_ICE: 40
+  QUARTZ_BLOCK: 4
+  PRISMARINE_SHARD: 0.25
+  PRISMARINE_CRYSTALS: 0.5
+  PRISMARINE: 1
+  SEA_LANTERN: 3
+  MOSS_BLOCK: 0.5
+  AMETHYST_SHARD: 0.5
+  AMETHYST_BLOCK: 2
+  OBSIDIAN: 5
+  CRYING_OBSIDIAN: 8
+  # --- Wood ---
+  OAK_LOG: 1
+  SPRUCE_LOG: 1
+  BIRCH_LOG: 1
+  JUNGLE_LOG: 1
+  ACACIA_LOG: 1
+  DARK_OAK_LOG: 1
+  MANGROVE_LOG: 1
+  CHERRY_LOG: 1.2
+  CRIMSON_STEM: 1
+  WARPED_STEM: 1
+  OAK_PLANKS: 0.25
+  SPRUCE_PLANKS: 0.25
+  BIRCH_PLANKS: 0.25
+  CHERRY_PLANKS: 0.3
+  STICK: 0.1
+  OAK_LEAVES: 0.2
+  CHERRY_LEAVES: 0.3
+  # --- Farming ---
+  WHEAT_SEEDS: 0.05
+  WHEAT: 0.5
+  HAY_BLOCK: 4.5
+  CARROT: 0.4
+  POTATO: 0.4
+  BEETROOT: 0.4
+  BEETROOT_SEEDS: 0.05
+  MELON_SLICE: 0.2
+  MELON: 1.8
+  MELON_SEEDS: 0.2
+  PUMPKIN: 1
+  CARVED_PUMPKIN: 1
+  PUMPKIN_SEEDS: 0.25
+  SUGAR_CANE: 0.5
+  SUGAR: 0.5
+  PAPER: 0.5
+  CACTUS: 0.5
+  BAMBOO: 0.1
+  KELP: 0.1
+  DRIED_KELP: 0.1
+  DRIED_KELP_BLOCK: 0.9
+  COCOA_BEANS: 0.5
+  NETHER_WART: 1
+  SWEET_BERRIES: 0.2
+  GLOW_BERRIES: 0.3
+  BONE_MEAL: 0.33
+  BONE_BLOCK: 3
+  EGG: 0.25
+  BROWN_MUSHROOM: 0.5
+  RED_MUSHROOM: 0.5
+  OAK_SAPLING: 0.5
+  SPRUCE_SAPLING: 0.5
+  BIRCH_SAPLING: 0.5
+  CHERRY_SAPLING: 1
+  # --- Food ---
+  APPLE: 1
+  BREAD: 1.5
+  BAKED_POTATO: 0.5
+  BEEF: 1.5
+  COOKED_BEEF: 2
+  PORKCHOP: 1.5
+  COOKED_PORKCHOP: 2
+  CHICKEN: 1
+  COOKED_CHICKEN: 1.5
+  MUTTON: 1
+  COOKED_MUTTON: 1.5
+  COD: 0.7
+  COOKED_COD: 1
+  SALMON: 0.9
+  COOKED_SALMON: 1.2
+  PUMPKIN_PIE: 1.5
+  COOKIE: 0.3
+  CAKE: 5
+  GOLDEN_CARROT: 4
+  GOLDEN_APPLE: 40
+  # --- Mob drops ---
+  ROTTEN_FLESH: 0.1
+  BONE: 1
+  STRING: 0.25
+  SPIDER_EYE: 1
+  GUNPOWDER: 1.5
+  TNT: 7
+  SLIME_BALL: 2
+  SLIME_BLOCK: 18
+  LEATHER: 1.5
+  RABBIT_HIDE: 1
+  RABBIT_FOOT: 5
+  FEATHER: 0.5
+  INK_SAC: 0.5
+  GLOW_INK_SAC: 2
+  ARROW: 0.25
+  ENDER_PEARL: 5
+  ENDER_EYE: 8
+  BLAZE_ROD: 8
+  BLAZE_POWDER: 4
+  MAGMA_CREAM: 3
+  GHAST_TEAR: 15
+  PHANTOM_MEMBRANE: 5
+  BREEZE_ROD: 8
+  TURTLE_SCUTE: 10
+  ARMADILLO_SCUTE: 5
+  NAUTILUS_SHELL: 20
+  ECHO_SHARD: 20
+  SHULKER_SHELL: 50
+  WITHER_SKELETON_SKULL: 100
+  NETHER_STAR: 1000
+  # --- Ores & minerals (sell only) ---
+  COAL: 0.5
+  CHARCOAL: 0.4
+  COAL_BLOCK: 4.5
+  RAW_COPPER: 0.3
+  COPPER_INGOT: 0.4
+  RAW_COPPER_BLOCK: 2.7
+  COPPER_BLOCK: 3.6
+  RAW_IRON: 2
+  IRON_NUGGET: 0.25
+  IRON_INGOT: 2.5
+  RAW_IRON_BLOCK: 18
+  IRON_BLOCK: 22.5
+  RAW_GOLD: 4
+  GOLD_NUGGET: 0.5
+  GOLD_INGOT: 5
+  RAW_GOLD_BLOCK: 36
+  GOLD_BLOCK: 45
+  REDSTONE: 0.4
+  REDSTONE_BLOCK: 3.6
+  LAPIS_LAZULI: 0.8
+  LAPIS_BLOCK: 7.2
+  QUARTZ: 1
+  EMERALD: 10
+  EMERALD_BLOCK: 90
+  DIAMOND: 30
+  DIAMOND_BLOCK: 270
+  ANCIENT_DEBRIS: 100
+  NETHERITE_SCRAP: 100
+  NETHERITE_INGOT: 400
+  NETHERITE_BLOCK: 3600
+  # --- Nether & End ---
+  NETHERRACK: 0.05
+  SOUL_SAND: 0.3
+  SOUL_SOIL: 0.3
+  MAGMA_BLOCK: 10
+  BASALT: 0.2
+  BLACKSTONE: 0.2
+  GLOWSTONE_DUST: 0.5
+  GLOWSTONE: 2
+  END_STONE: 0.3
+  CHORUS_FRUIT: 0.5
+  POPPED_CHORUS_FRUIT: 0.5
+  # --- Plants ---
+  DANDELION: 0.2
+  POPPY: 0.2
+  CORNFLOWER: 0.2
+  LILY_OF_THE_VALLEY: 0.3
+  PINK_PETALS: 0.2
+  VINE: 0.1
+  LILY_PAD: 0.2
+  # --- Special ---
+  NETHERITE_UPGRADE_SMITHING_TEMPLATE: 150
+  # --- Combat ---
+  COBWEB: 3
+  SHIELD: 4
+  RESPAWN_ANCHOR: 50
+  END_CRYSTAL: 25
+  EXPERIENCE_BOTTLE: 3
+  TOTEM_OF_UNDYING: 100
+
+# ----------------------------------------------
+# Menus
+# ----------------------------------------------
+menus:
+  sell-title: "&#FF69B4&l❀ Sell &8(close to sell)"
+  filler: PINK_STAINED_GLASS_PANE
+
+# ----------------------------------------------
+# Messages
+# %amount% = money, %player% = name, %count% = number of items
+# ----------------------------------------------
+messages:
+  prefix: "&#FF69B4&l❀ &8» &r"
+  players-only: "&cOnly players can use this."
+  player-not-found: "&cThat player has never joined the server."
+  invalid-amount: "&cThat's not a valid amount. Examples: &f100&c, &f2.5k&c, &f1m"
+  not-enough-money: "&cYou don't have enough money! &7(Balance: &a%amount%&7)"
+  balance-self: "&7Your balance: &a%amount%"
+  balance-other: "&f%player%&7's balance: &a%amount%"
+  pay-self: "&cYou can't pay yourself."
+  pay-min: "&cThe minimum you can pay is &a%amount%&c."
+  pay-sent: "&7You sent &a%amount% &7to &f%player%&7."
+  pay-received: "&7You received &a%amount% &7from &f%player%&7."
+  baltop-header: "&#FF69B4&l❀ Richest Players ❀"
+  baltop-line: "&#FFB6C1#%rank% &f%player% &8- &a%amount%"
+  baltop-footer: "&7Your rank: &#FFB6C1#%rank%"
+  eco-usage: "&cUsage: /eco <give|take|set|reset> <player> <amount>&7, &c/eco reload &7or &c/eco resetmarket"
+  eco-done: "&7%player%&7's balance is now &a%amount%&7."
+  eco-reloaded: "&aBlossomEconomy config reloaded."
+  market-reset: "&aAll market prices are back to normal."
+  bought: "&7You bought &f%count%x %item% &7for &a%amount%&7."
+  inventory-full: "&cYou don't have enough inventory space."
+  sold: "&7You sold &f%count% &7items for &a%amount%&7."
+  nothing-sold: "&cNone of those items can be sold."
+  returned: "&7Items that can't be sold were given back to you."
+  worth: "&f%item% &7sells for &a%amount% &7each &8(&a%stack% &7for this stack&8) &7Market: %trend%"
+  worthless: "&cThat item has no value. Try the auction house: &f/ah sell <price>"
+  hold-item: "&cHold an item in your hand first."
+  sell-usage: "&cHold an item and type &f/sell&c."
+  creative-sell-blocked: "&cYou can't sell items while in creative mode."
+  kill-reward: "&7You killed &f%player% &7and earned &a%amount%&7!"
+  kill-lost: "&f%player% &7killed you and took &c%amount%&7."
+  daily-claimed: "&#FF69B4&lDAILY REWARD! &7Day &f%day% &7streak: &a+%amount%"
+  daily-next: "&7Come back tomorrow for &a%amount%&7!"
+  daily-wait: "&cYou already claimed today. Come back in &f%time%&c."
+  daily-reminder: "&7Your daily reward is ready! Type &f/daily &7to claim it."
+  daily-disabled: "&cDaily rewards are turned off."
+  ah-usage: "&cUsage: /ah&7, &c/ah sell <price>&7, &c/ah mine &7or &c/ah collect"
+  ah-listed: "&7You listed &f%count%x %item% &7for &a%amount%&7."
+  ah-max: "&cYou can only have &f%max% &citems listed at once."
+  ah-price-range: "&cPrice must be between &a%min% &cand &a%max%&c."
+  ah-gone: "&cThat item was already sold or has expired."
+  ah-own: "&cYou can't buy your own item. Use &f/ah mine &cto cancel it."
+  ah-bought: "&7You bought &f%count%x %item% &7for &a%amount%&7."
+  ah-sold: "&f%player% &7bought your &f%item%&7! You earned &a%amount% &8(tax %tax%)"
+  ah-expired: "&7Your &f%item% &7listing expired. Get it back with &f/ah collect&7."
+  ah-cancelled: "&7Your &f%item% &7listing was cancelled."
+  ah-collected: "&7You collected your &f%item%&7."
+  ah-collect-reminder: "&7You have &f%count% &7auction item(s) to collect: &f/ah collect"
