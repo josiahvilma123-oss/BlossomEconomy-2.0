@@ -38,7 +38,6 @@ public final class BlossomEconomy extends JavaPlugin {
     private ShopManager shop;
     private AuctionManager auctions;
     private DailyManager daily;
-    private com.blossomsmp.economy.hooks.TooltipPrices tooltips;
 
     @Override
     public void onEnable() {
@@ -100,28 +99,11 @@ public final class BlossomEconomy extends JavaPlugin {
             new com.blossomsmp.economy.hooks.BlossomPlaceholders(this).register();
             getLogger().info("Hooked into PlaceholderAPI (%blossom_...% placeholders).");
         }
-        // "~$ 1M" worth line in item tooltips (needs ProtocolLib)
-        if (pm.getPlugin("ProtocolLib") != null) {
-            try {
-                tooltips = new com.blossomsmp.economy.hooks.TooltipPrices(this);
-                tooltips.start();
-                getLogger().info("Hooked into ProtocolLib (worth shown in item tooltips).");
-            } catch (Throwable t) {
-                tooltips = null;
-                getLogger().warning("Could not start tooltip prices: " + t);
-            }
-        } else {
-            getLogger().info("ProtocolLib not found - tooltip prices are off.");
-        }
         getLogger().info("BlossomEconomy is enabled and registered with Vault.");
     }
 
     @Override
     public void onDisable() {
-        if (tooltips != null) {
-            tooltips.stop();
-            tooltips = null;
-        }
         // Sell anything left in open sell menus so nobody loses items on shutdown
         for (Player player : Bukkit.getOnlinePlayers()) {
             Inventory top = player.getOpenInventory().getTopInventory();
@@ -162,12 +144,6 @@ public final class BlossomEconomy extends JavaPlugin {
         reloadConfig();
         market.loadConfig();
         shop.load();
-        if (tooltips != null) {
-            tooltips.refresh();
-            for (Player player : Bukkit.getOnlinePlayers()) {
-                player.updateInventory();
-            }
-        }
     }
 
     /** Gets a message from config.yml with the prefix and replacements ("%key%", "value", ...). */

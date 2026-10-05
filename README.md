@@ -14,7 +14,6 @@ The all-in-one economy plugin for Blossom SMP (Paper 1.21.11, needs Vault).
 - `/sell` sells the item in your hand
 - Items not in the price list are priced automatically from their crafting recipe
 - Holding an item shows its value above the hotbar
-- Hovering over an item shows its worth in the tooltip (`~$ 1M`), needs ProtocolLib
 - Damaged items sell for less, enchantments add value, enchanted books can be sold
 - `/worth` - live price of the item in your hand
 - `/eco give|take|set|reset <player> <amount>` `/eco reload` and `/eco resetmarket` (permission `blossom.admin`)

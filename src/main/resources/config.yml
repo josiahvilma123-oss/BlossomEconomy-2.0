@@ -1,5 +1,5 @@
 # ============================================
-#   ❀ BlossomEconomy 2.6 - Blossom SMP ❀
+#   ❀ BlossomEconomy 2.4 - Blossom SMP ❀
 # ============================================
 # Colours: &a, &d, &l ... and hex colours like &#FF69B4
 # After editing, run: /eco reload
@@ -37,18 +37,6 @@ enchant-value-per-level: 5
 price-display:
   enabled: true
   format: "&7Worth: &a%each% &8each &8| &a%stack% &7stack &8| %trend%"
-
-# ----------------------------------------------
-# Show the value in the item tooltip (hover over an item): "~$ 1M"
-# Needs ProtocolLib. Only changes what players SEE - real items are not touched.
-# %each% = one item, %stack% = whole stack, %amount% = stack size
-# ----------------------------------------------
-tooltip-prices:
-  enabled: true
-  format: "&7~&a$ &f%each%"
-  stack-format: "&7~&a$ &f%each% &8| &a$ &f%stack% &7total"
-  # Creative mode can turn fake lore into real lore, so it's hidden there
-  hide-in-creative: true
 
 # ----------------------------------------------
 # Live market
@@ -195,7 +183,7 @@ shop:
       items: [IRON_SWORD, IRON_AXE, DIAMOND_SWORD, DIAMOND_AXE, BOW, CROSSBOW, ARROW,
               SPECTRAL_ARROW, SHIELD, IRON_HELMET, IRON_CHESTPLATE, IRON_LEGGINGS, IRON_BOOTS,
               DIAMOND_HELMET, DIAMOND_CHESTPLATE, DIAMOND_LEGGINGS, DIAMOND_BOOTS, COBWEB, TNT,
-              EXPERIENCE_BOTTLE, TOTEM_OF_UNDYING]
+              EXPERIENCE_BOTTLE, TOTEM_OF_UNDYING, ELYTRA]
     netherend:
       name: "&#FF69B4&lNether & End"
       icon: ENDER_EYE

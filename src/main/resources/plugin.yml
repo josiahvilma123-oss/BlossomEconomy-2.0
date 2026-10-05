@@ -1,11 +1,11 @@
 name: BlossomEconomy
-version: 2.6.0
+version: 2.5.0
 main: com.blossomsmp.economy.BlossomEconomy
 api-version: '1.21'
 author: BlossomSMP
 description: The all-in-one Blossom SMP economy (money, live market, shop, sell, auction house, pay, baltop, kill rewards).
 depend: [Vault]
-softdepend: [PlaceholderAPI, ProtocolLib]
+softdepend: [PlaceholderAPI]
 
 commands:
   balance:

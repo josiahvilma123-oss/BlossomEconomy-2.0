@@ -85,7 +85,9 @@ public final class Menus {
             Material material = items.get(i);
             inv.setItem(i, item(material, "&f" + Text.itemName(material), List.of(
                     "&7Buy: &a" + Text.money(market.buyPrice(material)) + " &8each",
-                    "&7Sells for: &a" + Text.money(market.sellPrice(material)) + " &8each",
+                    market.sellPrice(material) > 0
+                            ? "&7Sells for: &a" + Text.money(market.sellPrice(material)) + " &8each"
+                            : "&7Sells for: &cCan't be sold",
                     "&7Market: " + market.trend(material),
                     "",
                     "&#FFB6C1Left-click &8» &7Buy 1 &8(&a" + Text.money(market.quoteBuy(material, 1)) + "&8)",

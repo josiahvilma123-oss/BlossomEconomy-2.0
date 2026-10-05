@@ -6,7 +6,7 @@
 
     <groupId>com.blossomsmp</groupId>
     <artifactId>BlossomEconomy</artifactId>
-    <version>2.6.0</version>
+    <version>2.5.0</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -51,12 +51,6 @@
                     <artifactId>bukkit</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>net.dmulloy2</groupId>
-            <artifactId>ProtocolLib</artifactId>
-            <version>5.4.0</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>me.clip</groupId>
